@@ -1,0 +1,12 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     client
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x10000369C, symSize: 0x278 }
+  - { offsetInCU: 0x7B, offset: 0x7B, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x10000369C, symSize: 0x278 }
+  - { offsetInCU: 0xCD, offset: 0xCD, size: 0x8, addend: 0x0, symName: _getFileContents, symObjAddr: 0x278, symBinAddr: 0x100003914, symSize: 0x184 }
+  - { offsetInCU: 0x153, offset: 0x153, size: 0x8, addend: 0x0, symName: _setupConnection, symObjAddr: 0x3FC, symBinAddr: 0x100003A98, symSize: 0x1B0 }
+  - { offsetInCU: 0x1BD, offset: 0x1BD, size: 0x8, addend: 0x0, symName: _writeToProxy, symObjAddr: 0x5AC, symBinAddr: 0x100003C48, symSize: 0x90 }
+  - { offsetInCU: 0x1EF, offset: 0x1EF, size: 0x8, addend: 0x0, symName: _readFromProxy, symObjAddr: 0x63C, symBinAddr: 0x100003CD8, symSize: 0xE0 }
+  - { offsetInCU: 0x24B, offset: 0x24B, size: 0x8, addend: 0x0, symName: __OSSwapInt16, symObjAddr: 0x71C, symBinAddr: 0x100003DB8, symSize: 0x24 }
+...

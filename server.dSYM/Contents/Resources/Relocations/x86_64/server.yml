@@ -1,0 +1,11 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     server
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100000800, symSize: 0x190 }
+  - { offsetInCU: 0x82, offset: 0x82, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100000800, symSize: 0x190 }
+  - { offsetInCU: 0xC6, offset: 0xC6, size: 0x8, addend: 0x0, symName: _getFileContents, symObjAddr: 0x190, symBinAddr: 0x100000990, symSize: 0x190 }
+  - { offsetInCU: 0x150, offset: 0x150, size: 0x8, addend: 0x0, symName: _setupConnection, symObjAddr: 0x320, symBinAddr: 0x100000B20, symSize: 0x1F0 }
+  - { offsetInCU: 0x1C8, offset: 0x1C8, size: 0x8, addend: 0x0, symName: _readFromProxy, symObjAddr: 0x510, symBinAddr: 0x100000D10, symSize: 0xD0 }
+  - { offsetInCU: 0x224, offset: 0x224, size: 0x8, addend: 0x0, symName: _writeToProxy, symObjAddr: 0x5E0, symBinAddr: 0x100000DE0, symSize: 0x85 }
+...

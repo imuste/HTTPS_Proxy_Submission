@@ -1,0 +1,230 @@
+/*****************************************************************************
+* Final Project: HTTPS PROXY
+* CS 112
+* README
+* Authors: Isabel Muste, Marti Zentmaier
+******************************************************************************/
+
+This program is an HTTPS proxy that has two modes of operation. It can run in
+a Man In The Middle mode where all the traffic coming through the proxy is
+decrypted when its received and encrypted when it is sent through. When the
+proxy is configured to Tunnel mode, no traffic will be decrypted, so it is
+sent as is to the receipient. 
+
+As part of the MITM configuration, the proxy has LLM functionality that can
+be used when playing the New York Times Connections game. This game displays
+16 words on the screen and asks the user to group the words into groups of
+4 where the words in each group are related in some way. This game can be 
+quite challenging, so to help the user play this game successfully, the proxy
+uses the LLM feature to display hints. There will be one hint for each
+category to help the user solve the game.
+
+
+/*****************************************************************************
+ RUNNING THE PROGRAM
+******************************************************************************/
+The program includes a "makeFile.sh" file which can be used to compile the 
+program into an executable file which can then be used to run the proxy.
+
+The device on which the program is run must have the OpenSSL library installed.
+Besides the OpenSSL library, no additional libraries are required to run the
+program besides the files present in the project directory.
+
+In the file there are a couple of flags that are set: "-DERROR", "-DDEBUG", 
+and "-DINFO". These flags can be used to print error, debug, and information 
+messages to the terminal while running the program. Any of these flags can be 
+removed if the user does not want to see this output.
+
+To compile the program with the provided make file, the user must type 
+"sh makeFile.sh". This will create an executable called "proxy". 
+
+The proxy by default will be run on the 127.0.0.1 IP address but the port 
+must be provided as the second command line argument. Lastly, the third 
+command line argument must specify the mode with which to run. This can be
+specified by entering "--mode=tunnel" or "--mode=MITM".
+
+If the user chooses to include the error logging flags, it can be useful to 
+redirect this to a file if this is not something that the user wants to see on 
+the terminal. This can be done by adding "2> error.log" on the command line.
+
+Example of full command line arguments:
+ -  sh makeFile.sh
+ -  ./proxy 8080 --mode-MITM 2> error.log
+
+A precompiled executable file called "proxy" is included in this folder which
+can be used to run the proxy.
+
+
+/*****************************************************************************
+ CERTIFICATE REQUIREMENTS
+******************************************************************************/
+To be able to interact with and use the program on a browser, the certificate
+that is used by the program needs to be trusted. This certificate is in 
+a sub-directory called "certs". This sub-directory contains a file called 
+"ca-cert.pem" which can be added to a browser or device as a trusted 
+certificate allowing the program to decrypt any traffic.
+
+Once the certificate is trusted by the device and / or browser, the program
+IP and port number should be added in the system settings or browser settings
+under the proxy settings. 
+
+Trusting the certificate as well as configuring the system / browser proxy
+settings will allow the program to be ran and the browser to be used.
+
+
+/*****************************************************************************
+ PROGRAM INTERACTION
+******************************************************************************/
+Once the certificate is trusted, the proxy settings are updated, and the 
+proxy is compiled and running, the user can interact with the proxy by
+using the browser.
+
+Any browser should work for the basic program functionality, but Firefox is 
+the preferred browser as it has easy cache and history control. 
+
+To access any regular websites, no special action is required, so the user can
+simply use the browser to lookup / interact with any websites. 
+
+To use the LLM functionality, the user can navigate to the NYT connections 
+game: https://www.nytimes.com/games/connections. This website will take a 
+couple of seconds to load as the LLM call is made and the page needs to be
+loaded with the added functionality. 
+
+Once the page has loaded, the hints will be available to the user and the 
+user has the option to regenerate the hints which will make a new LLM call
+to gett alternative hints.
+
+After the connections page is loaded once, the user should navigate to the
+browser settings and clear the cached content for the New York Times website
+to ensure that the browser will trust the proxy the next time this website is
+accessed.
+
+
+/*****************************************************************************
+ EXAMPLE PROGRAM USE
+******************************************************************************/
+
+1. Install the OpenSSL library
+2. Add the certificate file to the trusted files in the system or browser 
+        settings 
+3. Add the IP (127.0.0.1) and chosen port (eg. 8080) to the browser proxy
+        settings or device network settings
+4. Compile the program using the command: "sh makeFile.sh"
+5. Run the program using the command: "./proxy 8080 --mode=MITM 2> error.log"
+6. Navigate to the browser (Firefox preferred)
+7. Example browser interaction: 
+        https://www.google.com
+        https://www.youtube.com/nationalgeographic
+        https://www.nytimes.com/games/connections
+8. On the connections game page, there will be a button that says "Show Hint"
+        which can be used to display a hint. Then the "Next" and "Previous"
+        buttons can be used to navigate through the hints of which there
+        are 4. The "REGENERATE HINTS" button can be used to get newly 
+        generated LLM hints.
+9. If the user wants to go to the connections game website again, the browser
+        cache should be cleared before reloading the page
+10. To quit the program, enter "CTRL+C" on the command line
+
+
+/*****************************************************************************
+ KNOWN BUGS / NOTES
+******************************************************************************/
+The LLM call specifies to the LLM the format in which the response is expected,
+however, if the format is not adhered to by the LLM, the proxy might crash
+as it expects to be able to extract the 4 hints from the response using this
+exact format. 
+
+Similarly, the LLM call is made based on the connections solutions provided
+by the New York Times server, but since the connections game is different
+everyday, the solutions change everyday. So if the solutions have special
+characters that usually don not appear, this might give issues when passing
+the solutions to the LLM.
+
+If an unexpected or misformed request or response is received, the proxy
+might not recognize this as an error case and keep the client which could 
+cause memory or other related problems at some point in the future.
+
+The number of simultaneous connections the proxy can maintain is dependent
+on the capacity of the machine on which the proxy is running. The same is true
+for the speed of the proxy.
+
+The Connections website loads once the LLM call is made and the entire server
+response is received from the New York Times server. At times, it is possible
+that the LLM response takes a while to come in and / or that the NYT server
+takes a long time to send the full response. In these cases it is possible
+that the browser times out while waiting for the data from the proxy. When 
+this happens, it is best to clear the browser cache and reload the 
+Connections website.
+
+With the proxy in MITM mode, it occasionally happens that the SSL write to 
+a client crashes the program. This happens rarely, but when it does, it is
+best to rerun the proxy and try again. As of now the reason and solution for 
+this bug are unknown.
+
+
+/*****************************************************************************
+ PERFORMANCE EVALUATION
+******************************************************************************/
+The proxy was evaluated by first clearing the browser cache and history, and 
+running the below top 10 Alexa websites with the proxy on. After this, the 
+browser cache was again cleared and the websites were loaded without the 
+proxy. The testing was done on Firefox and a home WIFI network.
+
+|------------------------|-------------------------|-------------------------|
+| WEBSITE                | WITHOUT PROXY (seconds) | WITH PROXY (seconds)    |
+|------------------------|-------------------------|-------------------------|
+| google.com             | 1.55                    | 1.53                    |
+| youtube.com            | 6.73                    | 9.06                    |
+| facebook.com           | 1.41                    | 2.66                    |
+| baidu.com              | 8.43                    | 11.68                   |
+| wikipedia.org          | 1.19                    | 1.88                    |
+| qq.com                 | 12.53                   | 13.99                   |
+| taobao.com             | 10.68                   | 10.04                   |
+| tmall.com              | 13.08                   | 15.89                   |
+| yahoo.com              | 5.65                    | 6.85                    |
+| amazon.com             | 5.06                    | 4.14                    |
+|------------------------|-------------------------|-------------------------|
+
+
+/*****************************************************************************
+ INCLUDED FOLDERS / FILES
+******************************************************************************/
+Folders: 
+ -  certs: contains the proxy certificate and key which can be used to "trust"
+        the proxy on a device / browser
+ -  LLM: contains the example LLM code and documentation
+
+Files:
+ -  README: contains the details on setting up the program as well as a 
+        performance evaluation and list of known bugs and issues
+ -  cache.h: contains the function declarations for the cache
+ -  cache.c: contains the function definitions for the cache
+ -  proxy.h: contains the function declarations for the proxy program, 
+        including for the proxy.c, LLM.c, mitm.c, and tunnel.c functions
+ -  proxy.c: contains the function definitions for the general proxy logic, 
+        including routing incoming data to the tunnel or MITM. It also contains
+        the logic for setting up the proxy and mainting the proxy state.
+ -  LLM.c: contains the function definitions and functionality for the LLM
+        part of the proxy functionality. Here the LLM calls are made and other
+        LLM related functionality is provided.
+ -  mitm.c: contains the function definitions and functionality for the MITM
+        part of the proxy. It contains the decryption and encryption of 
+        incoming data and it handles the processing of this data for the MITM
+        proxy mode.
+ -  tunnel.c: contains the function definitions and functionality for the 
+        tunnel proxy mode where nothing is decrypted / encrypted, but data is
+        sent between clients and servers without observing it.
+ -  MurmurHash3: contains the functionality to be able to hash string values
+        to keys of our hash table. This document was taken from a public 
+        GitHub repository.
+ -  include.h: contains the includes necessary for the proxy to run.
+ -  logging.h: contains macros used for printing debug, error, and information 
+        messages.
+ -  makeFile.sh: contains the compilation steps for the proxy executable to be 
+        generated.
+ -  categories.txt: is used by the LLM module to store / retrieve today's 
+        categories to generate LLM hints. This file is updated by the program
+        once the NYT server sends the Connections solution.
+ -  format.txt: contains the format provided to the LLM to format the response 
+        as, allowing the program to successfully parse the LLM response.
+ -  proxy: precompiled executable file to run the proxy.

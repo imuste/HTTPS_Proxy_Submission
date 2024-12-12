@@ -1,0 +1,11 @@
+---
+triple:          'x86_64-apple-darwin'
+binary-path:     example
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _write_callback, symObjAddr: 0x0, symBinAddr: 0x100000870, symSize: 0x50 }
+  - { offsetInCU: 0x4D, offset: 0x4D, size: 0x8, addend: 0x0, symName: _url, symObjAddr: 0x6C0, symBinAddr: 0x100002000, symSize: 0x0 }
+  - { offsetInCU: 0x6C, offset: 0x6C, size: 0x8, addend: 0x0, symName: _x_api_key, symObjAddr: 0x6C8, symBinAddr: 0x100002008, symSize: 0x0 }
+  - { offsetInCU: 0x2EB, offset: 0x2EB, size: 0x8, addend: 0x0, symName: _write_callback, symObjAddr: 0x0, symBinAddr: 0x100000870, symSize: 0x50 }
+  - { offsetInCU: 0x34B, offset: 0x34B, size: 0x8, addend: 0x0, symName: _llmproxy_request, symObjAddr: 0x50, symBinAddr: 0x1000008C0, symSize: 0x270 }
+  - { offsetInCU: 0x3F6, offset: 0x3F6, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x2C0, symBinAddr: 0x100000B30, symSize: 0x170 }
+...
